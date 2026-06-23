@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PULSE | Fitness & Nutrition Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand"><i class="fa-solid fa-heart-pulse icon-pulse"></i> PULSE</div>
+        <div class="nav-actions">
+            <span id="streak-badge" class="streak-badge"><i class="fa-solid fa-fire"></i> <span id="streak-count">0</span> Day Streak</span>
+            <button id="theme-toggle" class="btn-icon"><i class="fa-solid fa-sun"></i></button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="quote-container" id="quote-box">
+            <p id="motivational-quote">"Your body can stand almost anything. It's your mind that you have to convince."</p>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <section class="card profile-card">
+                <h2><i class="fa-solid fa-user"></i> Fitness Profile</h2>
+                <form id="profile-form">
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" required min="10" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" required>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-weight">Goal Weight (kg)</label>
+                        <input type="number" id="goal-weight" step="0.1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile & Metrics</button>
+                </form>
+
+                <hr>
+
+                <div class="metrics-display">
+                    <h3>Your Metrics</h3>
+                    <div class="metric-grid">
+                        <div class="metric-item">
+                            <span class="metric-label">BMI</span>
+                            <span class="metric-value" id="bmi-val">--</span>
+                            <span class="metric-sub" id="bmi-cat">--</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Target TDEE</span>
+                            <span class="metric-value" id="tdee-val">--</span>
+                            <span class="metric-sub">kcal / day</span>
+                        </div>
+                    </div>
+                    <p class="eta-text" id="eta-display">Set your profile to estimate goal timeline.</p>
+                </div>
+            </section>
+
+            <section class="card tracker-card">
+                <h2><i class="fa-solid fa-utensils"></i> Daily Calorie Budget</h2>
+                <div class="calorie-summary-wrapper">
+                    <div class="calorie-bubble">
+                        <span class="bubble-num" id="cal-remaining">0</span>
+                        <span class="bubble-label" id="cal-remaining-label">Remaining</span>
+                    </div>
+                    <div class="calorie-stats-inline">
+                        <p>Base Target: <strong id="cal-target">0</strong> kcal</p>
+                        <p>Food Enters: <strong id="cal-consumed" class="text-gain">0</strong> kcal</p>
+                        <p>Burned: <strong id="cal-burned" class="text-burn">0</strong> kcal</p>
+                    </div>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div id="calorie-progress" class="progress-bar"></div>
+                </div>
+
+                <div class="tracker-forms">
+                    <form id="food-form" class="log-form">
+                        <h3>Log Food</h3>
+                        <div class="form-inline">
+                            <input type="text" id="food-name" placeholder="e.g., Chicken Breast" required>
+                            <input type="number" id="food-cals" placeholder="Calories" required min="1">
+                            <button type="submit" class="btn-circle"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </form>
+
+                    <form id="exercise-form" class="log-form">
+                        <h3>Log Exercise</h3>
+                        <div class="form-inline">
+                            <input type="text" id="exercise-name" placeholder="e.g., Running" required>
+                            <input type="number" id="exercise-cals" placeholder="Burnt Cals" required min="1">
+                            <button type="submit" class="btn-circle btn-burn-bg"><i class="fa-solid fa-fire"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="todays-logs">
+                    <h3>Today's Log Entries</h3>
+                    <ul id="today-items-list" class="log-list">
+                        </ul>
+                </div>
+            </section>
+
+            <section class="card analytics-card">
+                <h2><i class="fa-solid fa-chart-line"></i> Analytics & Weight Progress</h2>
+                <div class="chart-container">
+                    <canvas id="progressChart"></canvas>
+                </div>
+                
+                <div class="weekly-stats">
+                    <h3>Weekly Summary</h3>
+                    <div class="metric-grid">
+                        <div class="metric-item">
+                            <span class="metric-label">Weekly Consumed</span>
+                            <span class="metric-value-sm" id="week-consumed">0 kcal</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Weekly Burned</span>
+                            <span class="metric-value-sm" id="week-burned">0 kcal</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Net Deficit</span>
+                            <span class="metric-value-sm text-burn" id="week-deficit">0 kcal</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="card history-section">
+            <div class="history-header">
+                <h2><i class="fa-solid fa-history"></i> Historical Log History</h2>
+                <div class="history-actions">
+                    <input type="text" id="history-search" placeholder="Search history records...">
+                    <button id="btn-export" class="btn btn-secondary"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+                    <button id="btn-backup" class="btn btn-secondary"><i class="fa-solid fa-download"></i> Backup Data</button>
+                    <button id="btn-restore-trigger" class="btn btn-secondary"><i class="fa-solid fa-upload"></i> Restore</button>
+                    <input type="file" id="file-restore" style="display: none;" accept=".json">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Weight (kg)</th>
+                            <th>Consumed (kcal)</th>
+                            <th>Burned (kcal)</th>
+                            <th>Net (kcal)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

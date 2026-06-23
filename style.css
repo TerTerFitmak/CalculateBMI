@@ -1,0 +1,386 @@
+/* --- CSS VARIABLES & THEMES --- */
+:root {
+    --bg-base: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-card: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --primary: #38bdf8;
+    --primary-hover: #0ea5e9;
+    --accent-burn: #f43f5e;
+    --accent-gain: #10b981;
+    --border: #475569;
+    --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+[data-theme="light"] {
+    --bg-base: #f1f5f9;
+    --bg-surface: #ffffff;
+    --bg-card: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #0284c7;
+    --primary-hover: #0369a1;
+    --accent-burn: #e11d48;
+    --accent-gain: #059669;
+    --border: #cbd5e1;
+}
+
+/* --- RESET & BASIC STYLES --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    font-family: var(--font-stack);
+    line-height: 1.5;
+    padding-bottom: 40px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+}
+
+/* --- NAVIGATION BAR --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-surface);
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 25px;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--primary);
+}
+
+.icon-pulse {
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.streak-badge {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* --- MOTIVATIONAL QUOTE --- */
+.quote-container {
+    background: linear-gradient(90deg, var(--primary), #a855f7);
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* --- DASHBOARD GRID HOUSING --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr 1.25fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+}
+
+/* --- FORM LAYOUT ELEMENT COMPONENTS --- */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group-row .form-group {
+    flex: 1;
+}
+
+label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+input, select {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+    border-color: var(--primary);
+}
+
+/* --- BUTTON CONSTRUCTS --- */
+.btn {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn:active { transform: scale(0.98); }
+.btn-primary { background-color: var(--primary); color: #fff; width: 100%; }
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn-secondary { background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border); }
+.btn-secondary:hover { background-color: var(--border); }
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.btn-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--accent-gain);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-burn-bg { background-color: var(--accent-burn); }
+
+/* --- METRIC CHIPS --- */
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.metric-item {
+    background-color: var(--bg-card);
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border);
+}
+
+.metric-label { font-size: 0.75rem; color: var(--text-muted); display: block; text-transform: uppercase; }
+.metric-value { font-size: 1.6rem; font-weight: 700; color: var(--primary); display: block; }
+.metric-value-sm { font-size: 1.1rem; font-weight: 700; display: block; }
+.metric-sub { font-size: 0.75rem; color: var(--text-muted); display: block; }
+.eta-text { font-size: 0.85rem; font-style: italic; color: var(--text-muted); margin-top: 15px; text-align: center;}
+
+/* --- TRACKER COLUMN STRUCTURE --- */
+.calorie-summary-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.calorie-bubble {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 6px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-card);
+}
+
+.bubble-num { font-size: 1.8rem; font-weight: 800; }
+.bubble-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+
+.calorie-stats-inline p {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.text-burn { color: var(--accent-burn); }
+.text-gain { color: var(--accent-gain); }
+
+.progress-bar-container {
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    height: 12px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-gain);
+    transition: width 0.4s ease, background-color 0.3s;
+}
+.progress-bar.overlimit { background-color: var(--accent-burn); }
+
+.form-inline {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+}
+.form-inline input[type="text"] { flex: 2; }
+.form-inline input[type="number"] { flex: 1; }
+
+/* --- LOG ENTRY ITEMS LIST --- */
+.log-list {
+    list-style: none;
+    max-height: 160px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.log-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-card);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--accent-gain);
+}
+.log-item.exercise { border-left-color: var(--accent-burn); }
+
+.log-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.btn-delete {
+    background: none;
+    border: none;
+    color: var(--accent-burn);
+    cursor: pointer;
+}
+
+/* --- CHART WRAPPERS --- */
+.chart-container {
+    position: relative;
+    height: 220px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* --- HISTORY TABLE SECTION --- */
+.history-section { margin-top: 10px; }
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.history-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.history-table th, .history-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.history-table th {
+    background-color: var(--bg-card);
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.history-table tbody tr:hover {
+    background-color: var(--bg-card);
+}
